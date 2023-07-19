@@ -1,0 +1,32 @@
+{
+	"$schema": "https://json.schemastore.org/package.json",
+	"name": "worker",
+	"private": true,
+	"version": "0.0.1",
+	"license": "Apache-2.0",
+	"keywords": ["worker", "web-worker", "pwa"],
+	"types": "module",
+	"description": "A simple web worker",
+	"author": {
+		"name": "Sébastien Gordano",
+		"email": "sebastien.gordano@gmail.com"
+	},
+	"type": "module",
+	"main": "./dist/worker.umd.js",
+	"module": "./dist/worker.js",
+	"exports": {
+		".": {
+			"require": "./dist/worker.umd.js",
+			"import": "./dist/worker.js"
+		}
+	},
+	"scripts": {
+		"dev": "vite",
+		"build": "tsc && vite build"
+	},
+	"devDependencies": {
+		"@playwright/test": "^1.33.0",
+		"typescript": "^5.0.2",
+		"vite": "^4.3.2"
+	}
+}

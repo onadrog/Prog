@@ -1,0 +1,46 @@
+{
+	"name": "ecommerce_test",
+	"private": true,
+	"version": "0.1.0",
+	"type": "module",
+	"description": "A boilerplate for an e-commerce website using reactjs and react-router written in typescript.",
+	"keywords": [
+		"reactjs",
+		"react-router-dom",
+		"boilerplate",
+		"e-commerce",
+		"starter kit",
+		"typescript"
+	],
+	"licence": "MIT",
+	"homepage": "https://github.com/onadrog/react_ecommerce_boilerplate",
+	"author": {
+		"name": "Sébastien Gordano",
+		"email": "sebastien.gordano@gmail.com"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/onadrog/react_ecommerce_boilerplate"
+	},
+	"scripts": {
+		"dev": "vite",
+		"build": "tsc && vite build",
+		"preview": "vite preview"
+	},
+	"dependencies": {
+		"@popperjs/core": "^2.11.7",
+		"bootstrap": "^5.2.3",
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0",
+		"react-router-dom": "^6.10.0"
+	},
+	"devDependencies": {
+		"@types/react": "^18.0.34",
+		"@types/react-dom": "^18.0.11",
+		"@types/react-router-dom": "^5.3.3",
+		"@vitejs/plugin-react-swc": "^3.3.0",
+		"sass": "^1.62.0",
+		"typescript": "^5.0.4",
+		"vite": "^4.2.1"
+	}
+}
