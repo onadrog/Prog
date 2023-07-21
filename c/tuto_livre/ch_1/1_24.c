@@ -1,3 +1,4 @@
+#include <ctype.h>
 #include <errno.h>
 #include <stdio.h>
 #include <string.h>
@@ -14,37 +15,48 @@ typedef enum {
     RETURN,
     FUNC
 } TOKEN;
-const char *keywords[] = {"main", "if", "else", "void", "return", "int"};
 
-struct Token {
+const char *keywords[] = {"main", "if", "else", "void", "return", "int"};
+#define keywords_count (sizeof(keywords) / sizeof(keywords[0]))
+
+typedef struct {
     TOKEN type;
     char literal;
-};
+} Token;
 
-void read_char(void);
+typedef struct {
+    int pos;
+    int c;
+} Lexer;
+
+void read_char(Lexer *l);
 void skip_whitespace(int c);
 void usage(int n, char *program);
-void parser(struct Token *t);
-struct Token lexer(int c, struct Token *t);
+void parser(Lexer *l, Token *t);
+Token lexer(int c, Token *t);
 
 void skip_whitespace(int c) {
-    while (c == '\n' || c == '\t' || c == ' ' || c == '\r') {
+    while (isspace(c)) {
         continue;
     }
 }
 
-void read_char() {
-    int c, pos;
+void read_char(Lexer *l) {
+    int c;
     if (c == '\0') {
         return;
     }
-    pos += 1;
+    l->pos += 1;
 }
 
-void parser(struct Token *t) {}
+void parser(Lexer *l, Token *t) {}
 
-struct Token lexer(int c, struct Token *t) {
+Token lexer(int c, Token *t) {
+    Lexer l;
     switch (c) {
+    case '\0':
+        t->type = -1;
+        t->literal = c;
     case '(':
         t->type = LPAREN;
         t->literal = c;
@@ -62,34 +74,32 @@ struct Token lexer(int c, struct Token *t) {
 }
 
 void usage(int n, char *program) {
-    printf("ERROR: expected 1 argument, got %d.\n", n - 1);
+    fprintf(stderr, "ERROR: expected 1 argument, got %d.\n", n - 1);
     printf("USAGE: %s [filepath]\n", program);
 }
 
 int main(int argc, char **argv) {
 
-    if (argc == 1) {
-        usage(argc, argv[0]);
-        return 1;
-    } else if (argc > 2) {
+    if (argc == 1 || argc > 2) {
         usage(argc, argv[0]);
         return 1;
     }
-
     char *file_path = argv[1];
 
     FILE *file = fopen(file_path, "r");
 
     if (file == NULL) {
-        printf("ERROR: could not open %s\n%s\n", file_path, strerror(errno));
+        fprintf(stderr, "ERROR: could not open %s\n%s\n", file_path,
+                strerror(errno));
         return 1;
     }
 
     int c;
-    struct Token t;
+    Token t;
+
     while ((c = getc(file)) != EOF) {
 
-        if (c == '\n' || c == '\t' || c == ' ' || c == '\r') {
+        if (isspace(c)) {
             continue;
         }
 
@@ -105,5 +115,6 @@ int main(int argc, char **argv) {
     }
 
     fclose(file);
+
     return 0;
 }
